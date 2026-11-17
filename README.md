@@ -7,6 +7,17 @@ bol product research and your own store data. Requires PHP 8.1 or later.
 composer require marktmentor/api
 ```
 
+Try it without an account with the public test key `mm_test_demo`: it answers
+every endpoint with fixed example data (product `9300000138905032`, niche
+`6797`), free. See <https://api.marktmentor.nl/guides/test-key>.
+
+```php
+use MarktMentor\MarktMentorClient;
+
+$demo = new MarktMentorClient(token: 'mm_test_demo');
+echo $demo->products->get('9300000138905032')?->data->title, "\n";
+```
+
 ```php
 use MarktMentor\Exceptions\MarktMentorApiException;
 use MarktMentor\MarktMentorClient;
