@@ -10,8 +10,8 @@ use MarktMentor\Types\Category;
 use MarktMentor\Core\Pagination\OffsetPager;
 use MarktMentor\Types\CategoryListResponse;
 use MarktMentor\Types\CategoryResponse;
-use MarktMentor\Exceptions\MarktmentorException;
-use MarktMentor\Exceptions\MarktmentorApiException;
+use MarktMentor\Exceptions\MarktMentorException;
+use MarktMentor\Exceptions\MarktMentorApiException;
 use MarktMentor\Core\Json\JsonApiRequest;
 use MarktMentor\Environments;
 use MarktMentor\Core\Client\HttpMethod;
@@ -121,8 +121,8 @@ class ReferenceClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?CategoryResponse
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     public function category(int $categoryId, ?array $options = null): ?CategoryResponse
     {
@@ -130,7 +130,7 @@ class ReferenceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/reference/categories/{$categoryId}/",
                     method: HttpMethod::GET,
                 ),
@@ -145,11 +145,11 @@ class ReferenceClient
                 return CategoryResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -180,8 +180,8 @@ class ReferenceClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?BrandListResponse
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     public function brands(BrandsReferenceRequest $request, ?array $options = null): ?BrandListResponse
     {
@@ -194,7 +194,7 @@ class ReferenceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/reference/brands/",
                     method: HttpMethod::GET,
                     query: $query,
@@ -210,11 +210,11 @@ class ReferenceClient
                 return BrandListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -236,8 +236,8 @@ class ReferenceClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?CategoryListResponse
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     private function _categories(CategoriesReferenceRequest $request = new CategoriesReferenceRequest(), ?array $options = null): ?CategoryListResponse
     {
@@ -261,7 +261,7 @@ class ReferenceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/reference/categories/",
                     method: HttpMethod::GET,
                     query: $query,
@@ -277,11 +277,11 @@ class ReferenceClient
                 return CategoryListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

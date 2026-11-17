@@ -5,8 +5,8 @@ namespace MarktMentor\Organization;
 use Psr\Http\Client\ClientInterface;
 use MarktMentor\Core\Client\RawClient;
 use MarktMentor\Types\Organization;
-use MarktMentor\Exceptions\MarktmentorException;
-use MarktMentor\Exceptions\MarktmentorApiException;
+use MarktMentor\Exceptions\MarktMentorException;
+use MarktMentor\Exceptions\MarktMentorApiException;
 use MarktMentor\Core\Json\JsonApiRequest;
 use MarktMentor\Environments;
 use MarktMentor\Core\Client\HttpMethod;
@@ -69,8 +69,8 @@ class OrganizationClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?array<Organization>
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     public function get(?array $options = null): ?array
     {
@@ -78,7 +78,7 @@ class OrganizationClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/organizations/",
                     method: HttpMethod::GET,
                 ),
@@ -93,11 +93,11 @@ class OrganizationClient
                 return JsonDecoder::decodeArray($json, [Organization::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

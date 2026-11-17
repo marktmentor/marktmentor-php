@@ -5,8 +5,8 @@ namespace MarktMentor\Usage;
 use Psr\Http\Client\ClientInterface;
 use MarktMentor\Core\Client\RawClient;
 use MarktMentor\Types\Usage;
-use MarktMentor\Exceptions\MarktmentorException;
-use MarktMentor\Exceptions\MarktmentorApiException;
+use MarktMentor\Exceptions\MarktMentorException;
+use MarktMentor\Exceptions\MarktMentorApiException;
 use MarktMentor\Core\Json\JsonApiRequest;
 use MarktMentor\Environments;
 use MarktMentor\Core\Client\HttpMethod;
@@ -68,8 +68,8 @@ class UsageClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?Usage
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     public function get(?array $options = null): ?Usage
     {
@@ -77,7 +77,7 @@ class UsageClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/usage/",
                     method: HttpMethod::GET,
                 ),
@@ -92,11 +92,11 @@ class UsageClient
                 return Usage::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

@@ -6,8 +6,8 @@ use Psr\Http\Client\ClientInterface;
 use MarktMentor\Core\Client\RawClient;
 use MarktMentor\Store\Requests\OverviewStoreRequest;
 use MarktMentor\Types\StoreOverviewResponse;
-use MarktMentor\Exceptions\MarktmentorException;
-use MarktMentor\Exceptions\MarktmentorApiException;
+use MarktMentor\Exceptions\MarktMentorException;
+use MarktMentor\Exceptions\MarktMentorApiException;
 use MarktMentor\Core\Json\JsonApiRequest;
 use MarktMentor\Environments;
 use MarktMentor\Core\Client\HttpMethod;
@@ -81,8 +81,8 @@ class StoreClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?StoreOverviewResponse
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     public function overview(OverviewStoreRequest $request = new OverviewStoreRequest(), ?array $options = null): ?StoreOverviewResponse
     {
@@ -97,7 +97,7 @@ class StoreClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/store/overview/",
                     method: HttpMethod::GET,
                     query: $query,
@@ -113,11 +113,11 @@ class StoreClient
                 return StoreOverviewResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -223,8 +223,8 @@ class StoreClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?StoreProductsResponse
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     private function _products(ProductsStoreRequest $request = new ProductsStoreRequest(), ?array $options = null): ?StoreProductsResponse
     {
@@ -260,7 +260,7 @@ class StoreClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/store/products/",
                     method: HttpMethod::GET,
                     query: $query,
@@ -276,11 +276,11 @@ class StoreClient
                 return StoreProductsResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -302,8 +302,8 @@ class StoreClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?StoreInventoryResponse
-     * @throws MarktmentorException
-     * @throws MarktmentorApiException
+     * @throws MarktMentorException
+     * @throws MarktMentorApiException
      */
     private function _inventory(InventoryStoreRequest $request = new InventoryStoreRequest(), ?array $options = null): ?StoreInventoryResponse
     {
@@ -324,7 +324,7 @@ class StoreClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
                     path: "api/public/v1/store/inventory/",
                     method: HttpMethod::GET,
                     query: $query,
@@ -340,11 +340,11 @@ class StoreClient
                 return StoreInventoryResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new MarktmentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new MarktMentorException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new MarktmentorException(message: $e->getMessage(), previous: $e);
+            throw new MarktMentorException(message: $e->getMessage(), previous: $e);
         }
-        throw new MarktmentorApiException(
+        throw new MarktMentorApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

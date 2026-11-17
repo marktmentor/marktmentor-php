@@ -1,9 +1,9 @@
 {
   "name": "marktmentor/api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "MarktMentor PHP Library",
   "keywords": [
-    "marktmentor",
+    "markt-mentor",
     "api",
     "sdk"
   ],

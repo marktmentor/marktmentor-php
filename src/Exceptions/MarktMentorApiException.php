@@ -7,7 +7,7 @@ use Throwable;
 /**
  * This exception type will be thrown for any non-2XX API responses.
  */
-class MarktmentorApiException extends MarktmentorException
+class MarktMentorApiException extends MarktMentorException
 {
     /**
      * @var mixed $body
