@@ -77,8 +77,8 @@ class MarktMentorClient
             'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'MarktMentor',
-            'X-Fern-SDK-Version' => '0.1.2',
-            'User-Agent' => 'marktmentor/api/0.1.2',
+            'X-Fern-SDK-Version' => '0.1.3',
+            'User-Agent' => 'marktmentor/api/0.1.3',
         ];
 
         $this->options = $options ?? [];
