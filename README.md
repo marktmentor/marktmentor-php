@@ -4,8 +4,12 @@ Official PHP SDK for the [MarktMentor Public API](https://api.marktmentor.nl):
 bol product research and your own store data. Requires PHP 8.1 or later.
 
 ```sh
-composer require marktmentor/api
+composer require marktmentor/api guzzlehttp/guzzle
 ```
+
+The SDK sends its requests with a PSR-18 HTTP client. It finds an installed one
+by itself; Guzzle is the usual choice. Without a PSR-18 client, Composer stops
+with "No PSR-18 clients found".
 
 Try it without an account with the public test key `mm_test_demo`: it answers
 every endpoint with fixed example data (product `9300000138905032`, niche
