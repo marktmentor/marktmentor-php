@@ -1,6 +1,6 @@
 {
   "name": "marktmentor/api",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "MarktMentor PHP Library",
   "keywords": [
     "markt-mentor",
@@ -8,6 +8,11 @@
     "sdk"
   ],
   "license": "MIT",
+  "homepage": "https://api.marktmentor.nl",
+  "support": {
+    "docs": "https://api.marktmentor.nl",
+    "source": "https://github.com/marktmentor/marktmentor-php"
+  },
   "require": {
     "php": "^8.1",
     "ext-json": "*",
